@@ -1,40 +1,10 @@
-struct line { double a, b, c; };          // a way to represent a line
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <cassert>
 
-// the answer is stored in the third parameter (pass by reference)
-void pointsToLine(point p1, point p2, line &l) {
-  if (fabs(p1.x - p2.x) < EPS) {              // vertical line is fine
-    l.a = 1.0;   l.b = 0.0;   l.c = -p1.x;           // default values
-  } else {
-    l.a = -(double)(p1.y - p2.y) / (p1.x - p2.x);
-    l.b = 1.0;              // IMPORTANT: we fix the value of b to 1.0
-    l.c = -(double)(l.a * p1.x) - p1.y;
-} }
+using namespace std;
 
-Double distance_point_to_triangle(const Point &p, const Point &t1, const Point &t2, const Point &t3) {
-    Point u = t2 - t1;
-    Point v = t3 - t1;
-    Point n = u ^ v;
-    assert( cmp(n * n, 0) != 0 );
-    Double s = -(n * (p - t1)) / (n * n);
-    Point boom = p + s * n;
-
-    Point w = boom - t1;
-    Point nv = n ^ v;
-    Double a2 = (w * nv) / (u * nv);
-    Point nu = n ^ u;
-    Double a3 = (w * nu) / (v * nu);
-    Double a1 = 1 - a2 - a3;
-    
-    if (0 <= a1 and a1 <= 1 and 0 <= a2 and a2 <= 1 and 0 <= a3 and a3 <= 1) {
-        return (boom - p).length();
-    } else {
-        Double ans = distance_point_to_segment(p, t1, t2);
-        ans = min(ans, distance_point_to_segment(p, t2, t3));
-        ans = min(ans, distance_point_to_segment(p, t3, t1));
-        return ans;
-    }
-}
-///// stanford
 double INF = 1e100;
 double EPS = 1e-12;
 
@@ -233,4 +203,3 @@ bool IsSimple(const vector<PT> &p) {
   }
   return true;
 }
-
