@@ -1,0 +1,14 @@
+char s1[1005],s2[1005];
+int size, pd[1005][1005];
+
+int f(int a1, int a2){
+	if(a1 == size || a2 == size) return 0;
+	//printf("%d %d\n",a1,a2);
+	if(pd[a1][a2] != -1) return pd[a1][a2];
+	if(s1[a1] == s2[a2]){
+		pd[a1][a2] = f(a1+1,a2+1) + 1;
+	}else{
+		pd[a1][a2] = max(f(a1,a2+1),f(a1+1,a2));
+	}
+	return pd[a1][a2];
+}
